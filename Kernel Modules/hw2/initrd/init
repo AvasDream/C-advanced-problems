@@ -1,0 +1,40 @@
+#!/bin/busybox sh
+
+#Busybox symlink itself
+/bin/busybox --install -s /bin
+for dir in boot media mnt opt run sbin srv tmp usr var sys proc
+	do mkdir $dir
+	echo -e "\e[32m create directory $dir \e[0m"
+done
+echo -e "\e[34mMount devtmpfs at /dev \e[0m"
+mount -t devtmpfs devtemps /dev
+echo -e "\e[34mMount sysfs at /sys \e[0m"
+mount -t sysfs none /sys
+echo -e "\e[34mMount procfs at /proc \e[0m"
+mount -t proc proc  /proc
+echo -e "\e[34mMount tmpfs at /tmp \e[0m"
+mount -t tmpfs none /tmp
+echo -e "\e[34mMount devpts at /dev/pts \e[0m"
+mkdir /dev/pts
+mount -t devpts devpts /dev/pts
+export LD_LIBRARY_PATH=/lib
+echo -e "\e[34mStarting Dropbear SSH-Server"
+mkdir etc/dropbear
+cd /bin
+ln -s dropbearmulti dropbear
+ln -s dropbearmulti dbclient
+ln -s dropbearmulti dropbearkey
+ln -s dropbearmulti dropbearconvert
+ln -s dropbearmulti scp
+cd /
+echo "1" > /proc/sys/net/ipv4/ip_forward
+ifconfig lo 127.0.0.1 up
+ifconfig eth0 0.0.0.0 up
+chmod +x /etc/udhcpc/simple.script
+udhcpc -i eth0 -s /etc/udhcpc/simple.script
+chmod 700 etc/dropbear
+chown -R root /root
+chmod -R 700 /root
+dropbear -sgR > /tmp/dropbear.log
+echo -e "\e[42mExecute Shell\e[0m"
+bash 

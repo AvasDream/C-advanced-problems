@@ -1,0 +1,5 @@
+#!/bin/bash
+l="failed"
+dmesg | grep 'Thread:' > /dev/null
+[ $? == 0 ] && l="passed"
+echo -e "Test $l"

@@ -1,0 +1,7 @@
+#!/bin/bash
+l="failed"
+dmesg | grep 'Counter: 4' > /dev/null
+[ $? == 0 ] && l="passed"
+echo -e "Test $l"
+
+# ./lib/modules/4.11.0/mysemaphore.ko.test

@@ -1,0 +1,7 @@
+#!/bin/bash
+return=$(cat /dev/hello | grep "Hello from Group 20")
+if [ "$return" = "Hello from Group 20" ]; then
+	echo "Test passed"
+else
+	echo "Test failed"
+fi

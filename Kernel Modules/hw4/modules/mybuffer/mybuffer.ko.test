@@ -1,0 +1,21 @@
+#!/bin/bash
+test=failed
+if [[ $(ls /dev/mybuffer) == "/dev/mybuffer" ]]; then
+    test=passed
+fi
+# A lot of threads wait
+sleep 2 &&
+t1=$(cat /dev/mybuffer) &
+t2=$(cat /dev/mybuffer) &
+t3=$(cat /dev/mybuffer) &
+t4=$(cat /dev/mybuffer) &
+t5=$(cat /dev/mybuffer) &
+# Write one time to buffer
+var="threadsafe"
+echo $var > /dev/mybuffer &
+if [[ "$t1" == "$var" ]] || [[ "$t2" == "$var" ]] || [[ "$t3" == "$var" ]] || [[ "$t4" == "$var" ]] || [[ "$t5" == "$var" ]]
+then
+    echo "Behaviour is threadsafe"
+    test=failed
+fi
+echo "Test $test"

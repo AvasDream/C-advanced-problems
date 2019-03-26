@@ -1,0 +1,7 @@
+#!/bin/bash
+return=$(cat /dev/hello_counted | grep "Hello from grp20")
+if [ "$return" != "" ]; then
+	echo "Test passed"
+else
+	echo "Test failed"
+fi

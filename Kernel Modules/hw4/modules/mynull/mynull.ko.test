@@ -1,0 +1,9 @@
+#!/bin/bash
+test=false
+[ -e /dev/mynull ] && test=true
+if [ $test ]
+then
+	echo "Test passed"
+else
+	echo "Test failed"
+fi

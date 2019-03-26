@@ -1,0 +1,14 @@
+#!/bin/sh
+
+case "$1" in
+	deconfig)
+		echo "Setting IP address 0.0.0.0 on $interface"
+		ifconfig $interface 0.0.0.0
+		;;
+	renew|bound)
+		echo "Setting IP address $ip on $interface"
+		ifconfig $interface $ip up
+		;;
+esac
+
+exit 0

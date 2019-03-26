@@ -1,0 +1,9 @@
+result=$(dmesg | grep "Tasklet grp20")
+
+if [ "$result" != "" ]; then
+    echo "TEST PASSED"
+    exit 0
+else
+    echo "TEST FAILED"
+    exit 1
+fi

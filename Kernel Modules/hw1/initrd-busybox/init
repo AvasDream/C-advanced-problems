@@ -1,0 +1,20 @@
+#!/bin/busybox sh
+
+#Busybox symlink itself
+/bin/busybox --install -s /bin
+for dir in boot etc lib media mnt opt run sbin srv tmp usr var sys proc
+	do mkdir $dir
+	echo -e "\e[32m create directory $dir \e[0m"
+done
+echo -e "\e[34mMount devtmpfs at /dev \e[0m"
+mount -t devtmpfs devtemps /dev
+echo -e "\e[34mMount sysfs at /sys \e[0m"
+mount -t sysfs none /sys
+echo -e "\e[34mMount procfs at /proc \e[0m"
+mount -t proc proc  /proc
+echo -e "\e[34mMount tmpfs at /tmp \e[0m"
+mount -t tmpfs none /tmp
+echo -e "\e[36mRun sysinfo application\e[0m"
+sysinfo
+echo -e "\e[42mExecute Shell\e[0m"
+bash 
